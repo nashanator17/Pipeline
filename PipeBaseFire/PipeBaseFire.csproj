@@ -108,7 +108,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\FireBaseDB.cs" />
+    <Compile Include="Assets\Scripts\AddNoteButtonHandler.cs" />
+    <Compile Include="Assets\Scripts\FireBaseAuthHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Firebase\Editor\FirebaseAuth_v4.1.0_manifest.txt" />
