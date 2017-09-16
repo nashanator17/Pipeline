@@ -175,6 +175,9 @@
     <Reference Include="Firebase.Messaging">
       <HintPath>Assets\Firebase\Plugins\Firebase.Messaging.dll</HintPath>
     </Reference>
+    <Reference Include="Mapbox.Json">
+      <HintPath>Assets\Mapbox\Core\Plugins\ThirdParty\Mapbox.Json\Net35\Mapbox.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PipeBaseFire.csproj">
@@ -196,6 +199,7 @@
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-auth-unity\maven-metadata.xml" />
     <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-messaging-unity\maven-metadata.xml" />
+    <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver_v1.2.45.0.txt" />
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\Firebase\AndroidManifest.xml" />
