@@ -24,6 +24,10 @@ namespace GoogleARCore.HelloAR
     using UnityEngine;
     using UnityEngine.Rendering;
     using GoogleARCore;
+    using Firebase;
+    using Firebase.Auth;
+    using Firebase.Database;
+    using Firebase.Unity.Editor;
 
     /// <summary>
     /// Controlls the HelloAR example.
@@ -76,6 +80,14 @@ namespace GoogleARCore.HelloAR
 
 		private Anchor m_mapAnchor;
 		private TrackedPlane m_lowestPlane;
+
+        private DatabaseReference dbref;
+
+        public void Start()
+        {
+            FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://pipebasefire.firebaseio.com/");
+            dbref = FirebaseDatabase.DefaultInstance.RootReference;
+        }
 
         /// <summary>
         /// The Unity Update() method.
@@ -161,6 +173,13 @@ namespace GoogleARCore.HelloAR
 
             if (Session.Raycast(m_firstPersonCamera.ScreenPointToRay(touch.position), raycastFilter, out hit))
             {
+                // write to FireBase
+                string userId = FireBaseAuthHandler.user.UserId;
+                Note note = new Note(hit.Point.x, hit.Point.y, "Note goes here");
+                string json = JsonUtility.ToJson(note);
+                string keyToPush = dbref.Child("users").Child(userId).Child("notes").Push().Key;
+                dbref.Child("users").Child(userId).Child("notes").Child(keyToPush).SetRawJsonValueAsync(json);
+
                 // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                 // world evolves.
                 var anchor = Session.CreateAnchor(hit.Point, Quaternion.identity);

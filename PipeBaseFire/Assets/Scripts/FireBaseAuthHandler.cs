@@ -61,7 +61,7 @@ public class FireBaseAuthHandler : MonoBehaviour {
 
             /* TESTING ONLY */
 
-            TestWriteToFirebase();
+            //TestWriteToFirebase();
 
             /* /TESTING ONLY */
             // Start the main activity
