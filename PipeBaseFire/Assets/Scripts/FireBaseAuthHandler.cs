@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Unity.Editor;
 
 public class FireBaseAuthHandler : MonoBehaviour {
 
@@ -12,6 +16,8 @@ public class FireBaseAuthHandler : MonoBehaviour {
     private Button btn;
     private InputField usernameField;
     private InputField passwordField;
+
+    public static Firebase.Auth.FirebaseUser user;
 
     // Use this for initialization
     void Start()
@@ -48,9 +54,34 @@ public class FireBaseAuthHandler : MonoBehaviour {
             }
 
             Firebase.Auth.FirebaseUser newUser = task.Result;
+            FireBaseAuthHandler.user = newUser;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
-            GameObject.Find("InputField").GetComponent<InputField>().text = "Successful Login!";
+            //GameObject.Find("InputField").GetComponent<InputField>().text = "Successful Login!";
+
+            /* TESTING ONLY */
+
+            TestWriteToFirebase();
+
+            /* /TESTING ONLY */
+            // Start the main activity
+            SceneManager.LoadScene(1);
         });
+    }
+
+    void TestWriteToFirebase()
+    {
+        //https://pipebasefire.firebaseio.com/
+        FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://pipebasefire.firebaseio.com/");
+        // Get the root reference location of the database.
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        string userId = user.UserId;
+        Note note = new Note(0.0, 0.0, "Why am I in the middle of the sea?");
+        string json = JsonUtility.ToJson(note);
+
+        string keyToPush = reference.Child("users").Child(userId).Child("notes").Push().Key;
+        reference.Child("users").Child(userId).Child("notes").Child(keyToPush).SetRawJsonValueAsync(json);
+
     }
 }

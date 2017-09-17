@@ -491,6 +491,7 @@
     <Compile Include="Assets\Mapbox\Unity\Utilities\VectorExtensions.cs" />
     <Compile Include="Assets\RasterMap.cs" />
     <Compile Include="Assets\Scripts\AddNoteButtonHandler.cs" />
+    <Compile Include="Assets\Scripts\DBUtils.cs" />
     <Compile Include="Assets\Scripts\FireBaseAuthHandler.cs" />
   </ItemGroup>
   <ItemGroup>
