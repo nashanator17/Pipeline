@@ -120,7 +120,7 @@ namespace GoogleARCore.HelloAR
                 {
                     showSearchingUI = false;
 		
-					if (!m_mapAnchor || m_lowestPlane == null || !m_lowestPlane.IsValid || m_allPlanes[i].Position.y < m_lowestPlane.Position.y) {
+					/*if (!m_mapAnchor || m_lowestPlane == null || !m_lowestPlane.IsValid || m_allPlanes[i].Position.y < m_lowestPlane.Position.y) {
 						//m_mapGameObject.transform.position = m_allPlanes[i].Position;
 						//m_mapGameObject.transform.localScale = new Vector3 (1,1,1);
 						m_mapAnchor = Session.CreateAnchor (new Vector3 (m_allPlanes [i].Position.x, m_allPlanes [i].Position.y - 1.5F, m_allPlanes [i].Position.z), Quaternion.identity);
@@ -136,6 +136,15 @@ namespace GoogleARCore.HelloAR
 					//m_mapGameObject.GetComponent<PlaneAttachment> ().Attach (m_allPlanes [i]);
 
                     //break;
+                    */
+					if (m_mapAnchor == null) {
+						m_mapAnchor = Session.CreateAnchor (Vector3.zero, Quaternion.identity);
+						m_mapGameObject.transform.parent = m_mapAnchor.transform;
+						m_mapGameObject.transform.localScale = new Vector3 (1,1,1);
+						m_mapGameObject.transform.localPosition = new Vector3(0,0,0);
+						m_mapGameObject.transform.localRotation = Quaternion.identity;
+					}
+					break;
                 }
             }
 
