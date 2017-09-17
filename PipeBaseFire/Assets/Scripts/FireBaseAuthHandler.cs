@@ -50,6 +50,7 @@ public class FireBaseAuthHandler : MonoBehaviour {
             Firebase.Auth.FirebaseUser newUser = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
+            GameObject.Find("InputField").GetComponent<InputField>().text = "Successful Login!";
         });
     }
 }
