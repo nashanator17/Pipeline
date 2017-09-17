@@ -9,6 +9,7 @@ public class RasterMap : MonoBehaviour, Mapbox.Utils.IObserver<RasterTile> {
     private Map<RasterTile> map;
     public Vector2d subtractFromInit;
     public float tileSizeInMeters;
+    public Material mapTileMaterial;
     void Start() {
         map = new Map<RasterTile>(MapboxAccess.Instance);
         map.MapId = "mapbox://styles/mapbox/streets-v10";
@@ -45,7 +46,7 @@ public class RasterMap : MonoBehaviour, Mapbox.Utils.IObserver<RasterTile> {
             tileQuad.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
             var texture = new Texture2D(0, 0);
             texture.LoadImage(tile.Data);
-            var material = new Material(Shader.Find("Unlit/Texture"));
+            var material = new Material(mapTileMaterial);
             material.mainTexture = texture;
             tileQuad.GetComponent<MeshRenderer>().sharedMaterial = material;
         }
