@@ -35,6 +35,8 @@ namespace GoogleARCore.HelloAR
 
         private bool m_isVisible = true;
 
+
+
         /// <summary>
         /// Unity start.
         /// </summary>
@@ -48,6 +50,9 @@ namespace GoogleARCore.HelloAR
         /// </summary>
         public void Update()
         {
+			if (m_AttachedPlane == null) {
+				return;
+			}
             // If the plane has been subsumed switch attachment to the subsuming plane.
             while (m_AttachedPlane.SubsumedBy != null)
             {

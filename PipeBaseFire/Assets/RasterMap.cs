@@ -12,7 +12,7 @@ public class RasterMap : MonoBehaviour, Mapbox.Utils.IObserver<RasterTile> {
     public Material mapTileMaterial;
     void Start() {
         map = new Map<RasterTile>(MapboxAccess.Instance);
-        map.MapId = "mapbox://styles/mapbox/streets-v10";
+        map.MapId = "mapbox://styles/zhuowei/cj7ocqam7azxn2sp152imbdfc";
         map.Subscribe(this);
         MoveToPosition(new Vector2d(49.2320, -123.1164));
     }
@@ -41,9 +41,9 @@ public class RasterMap : MonoBehaviour, Mapbox.Utils.IObserver<RasterTile> {
             tileQuad.transform.SetParent(transform);
             tileQuad.name = tile.Id.ToString();
             float scaleFactor = tileSizeInMeters;
-            tileQuad.transform.localPosition = new Vector3((tile.Id.X - (int)(subtractFromInit.x))* scaleFactor, -(tile.Id.Y - (int)(subtractFromInit.y)) * scaleFactor, 0);
-            tileQuad.transform.localRotation = Quaternion.identity;
-            tileQuad.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+			tileQuad.transform.localPosition = new Vector3((tile.Id.X - (int)(subtractFromInit.x))* scaleFactor, -(tile.Id.Y - (int)(subtractFromInit.y)) * scaleFactor, 0);
+			tileQuad.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1);
+			tileQuad.transform.localRotation = Quaternion.identity;
             var texture = new Texture2D(0, 0);
             texture.LoadImage(tile.Data);
             var material = new Material(mapTileMaterial);

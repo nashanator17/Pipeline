@@ -50,6 +50,8 @@ namespace GoogleARCore.HelloAR
         /// </summary>
         public GameObject m_searchingForPlaneUI;
 
+		public GameObject m_mapGameObject;
+
         private List<TrackedPlane> m_newPlanes = new List<TrackedPlane>();
 
         private List<TrackedPlane> m_allPlanes = new List<TrackedPlane>();
@@ -71,6 +73,9 @@ namespace GoogleARCore.HelloAR
             new Color(1.0f, 0.921f, 0.231f),
             new Color(1.0f, 0.756f, 0.027f)
         };
+
+		private Anchor m_mapAnchor;
+		private TrackedPlane m_lowestPlane;
 
         /// <summary>
         /// The Unity Update() method.
@@ -114,7 +119,23 @@ namespace GoogleARCore.HelloAR
                 if (m_allPlanes[i].IsValid)
                 {
                     showSearchingUI = false;
-                    break;
+		
+					if (!m_mapAnchor || m_lowestPlane == null || !m_lowestPlane.IsValid || m_allPlanes[i].Position.y < m_lowestPlane.Position.y) {
+						//m_mapGameObject.transform.position = m_allPlanes[i].Position;
+						//m_mapGameObject.transform.localScale = new Vector3 (1,1,1);
+						m_mapAnchor = Session.CreateAnchor (new Vector3 (m_allPlanes [i].Position.x, m_allPlanes [i].Position.y - 1.5F, m_allPlanes [i].Position.z), Quaternion.identity);
+						m_mapGameObject.transform.parent = m_mapAnchor.transform;
+						m_mapGameObject.transform.localScale = new Vector3 (1,1,1);
+						m_mapGameObject.transform.localPosition = new Vector3(0,-10,0);
+						m_mapGameObject.transform.localRotation = Quaternion.identity;
+						//m_mapGameObject.GetComponent<PlaneAttachment> ().Attach (m_allPlanes [i]);
+						m_lowestPlane = m_allPlanes [i];
+					} 
+					//m_mapGameObject.transform.position = new Vector3(m_mapGameObject.transform.position.x, m_allPlanes[i].Position.y - 1.5F,
+					//	m_mapGameObject.transform.position.z);
+					//m_mapGameObject.GetComponent<PlaneAttachment> ().Attach (m_allPlanes [i]);
+
+                    //break;
                 }
             }
 
