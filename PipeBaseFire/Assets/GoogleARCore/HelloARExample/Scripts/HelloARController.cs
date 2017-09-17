@@ -155,7 +155,37 @@ namespace GoogleARCore.HelloAR
 						m_mapGameObject.transform.localScale = new Vector3 (1,1,1);
 						m_mapGameObject.transform.localPosition = new Vector3(0,0,0);
 						m_mapGameObject.transform.localRotation = Quaternion.identity;
-					}
+
+                        string userId = FireBaseAuthHandler.user.UserId;
+                        dbref.Child("users").Child(userId).Child("notes").GetValueAsync().ContinueWith(Task =>
+                        {
+                            if (Task.IsCompleted)
+                            {
+                                DataSnapshot snapshot = Task.Result;
+                                foreach(DataSnapshot snap1 in snapshot.Children)
+                                {
+                                    foreach(DataSnapshot raw_note in snap1.Children)
+                                    {
+                                        Note note = JsonUtility.FromJson<Note>(raw_note.GetRawJsonValue());
+                                        Vector3 point = new Vector3((float)note.loclat, 0, (float)note.loclong);
+                                        // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
+                                        // world evolves.
+                                        var anchor = Session.CreateAnchor(point, Quaternion.identity);
+
+                                        // Intanstiate an Andy Android object as a child of the anchor; it's transform will now benefit
+                                        // from the anchor's tracking.
+                                        var andyObject = Instantiate(m_andyAndroidPrefab, point, Quaternion.identity,
+                                            anchor.transform);
+
+                                        // Andy should look at the camera but still be flush with the plane.
+                                        andyObject.transform.LookAt(m_firstPersonCamera.transform);
+                                        andyObject.transform.rotation = Quaternion.Euler(0.0f,
+                                            andyObject.transform.rotation.eulerAngles.y, andyObject.transform.rotation.z);
+                                    }
+                                }
+                            }
+                        });
+                    }
 					break;
                 }
             }
