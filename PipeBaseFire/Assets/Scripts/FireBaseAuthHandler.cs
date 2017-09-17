@@ -7,7 +7,7 @@ using Firebase.Auth;
 
 public class FireBaseAuthHandler : MonoBehaviour {
 
-    FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+    FirebaseAuth auth;
 
     private Button btn;
     private InputField usernameField;
@@ -16,6 +16,8 @@ public class FireBaseAuthHandler : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        auth = FirebaseAuth.DefaultInstance;
+
         btn = gameObject.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
 
